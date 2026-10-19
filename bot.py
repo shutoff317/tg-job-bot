@@ -22,7 +22,7 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-SOURCE = os.getenv("SOURCE_CHANNEL", "availablejobs4u").lstrip("@")
+SOURCE = os.getenv("SOURCE_CHANNEL", "freshernow").lstrip("@")
 PAGES = int(os.getenv("PAGES", "3"))
 MAX_KEEP = int(os.getenv("MAX_KEEP", "500"))
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
