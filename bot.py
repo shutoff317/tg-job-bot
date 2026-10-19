@@ -29,6 +29,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 TARGET_CHAT = os.getenv("TARGET_CHAT", "")
 MAX_POST = int(os.getenv("MAX_POST", "5"))
 POST_BACKLOG = os.getenv("POST_BACKLOG", "") == "1"
+Channel=os.getenv("channel", "fresheradd")
 
 DATA_FILE = Path(__file__).parent / "jobs.json"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; JobFetchBot/1.0)"}
@@ -97,7 +98,7 @@ def parse_posts(html):
             "phones": sorted(set(m.strip() for m in PHONE_RE.findall(text))),
             "links": sorted(set(links)),
             "date": date,
-            "source": f"https://t.me/{SOURCE}/{post_id}",
+            "source": f"https://t.me/{Channel}/{post_id}",
         })
     next_before = None
     more = soup.select_one("a.tme_messages_more[data-before]")
