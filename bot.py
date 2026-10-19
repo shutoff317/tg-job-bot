@@ -27,7 +27,7 @@ PAGES = int(os.getenv("PAGES", "3"))
 MAX_KEEP = int(os.getenv("MAX_KEEP", "500"))
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 TARGET_CHAT = os.getenv("TARGET_CHAT", "")
-MAX_POST = int(os.getenv("MAX_POST", "10"))
+MAX_POST = int(os.getenv("MAX_POST", "5"))
 POST_BACKLOG = os.getenv("POST_BACKLOG", "") == "1"
 
 DATA_FILE = Path(__file__).parent / "jobs.json"
