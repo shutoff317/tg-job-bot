@@ -25,7 +25,8 @@ jobs:
         env:
           SOURCE_CHANNEL: availablejobs4u
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}       # optional
-          TARGET_CHAT: ${{ secrets.TARGET_CHAT }}   # optional
+          TARGET_CHAT: ${{ secrets.TARGET_CHAT }}  
+          POST_BACKLOG: "1"# optional
         run: python bot.py
 
       - name: Commit jobs.json
