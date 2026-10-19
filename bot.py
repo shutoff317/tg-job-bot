@@ -98,7 +98,7 @@ def parse_posts(html):
             "phones": sorted(set(m.strip() for m in PHONE_RE.findall(text))),
             "links": sorted(set(links)),
             "date": date,
-            "source": f"https://t.me/{Channel}/{post_id}",
+            "source": f"https://t.me/{Channel}",
         })
     next_before = None
     more = soup.select_one("a.tme_messages_more[data-before]")
