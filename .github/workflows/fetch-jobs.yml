@@ -1,38 +1,39 @@
-name: Fetch jobs
+name: Fetch Jobs
 
 on:
   schedule:
-    - cron: "0 */3 * * *"   # every 3 hours (UTC)
-  workflow_dispatch:         # manual "Run workflow" button
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
 
 permissions:
-  contents: write            # needed to commit jobs.json
+  contents: write
 
 jobs:
-  fetch:
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-          cache: pip
+          python-version: "3.11"
 
-      - run: pip install -r requirements.txt
+      - name: Install
+        run: pip install requests beautifulsoup4
 
-      - name: Run bot
+      - name: Run script
         env:
-          SOURCE_CHANNEL: availablejobs4u
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}       # optional
-          TARGET_CHAT: ${{ secrets.TARGET_CHAT }}  
-          POST_BACKLOG: "1"# optional
-        run: python bot.py
+          SOURCE_CHANNEL: Freshers_job_updates_by_akhila
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          TARGET_CHAT: "@mychannel"
+          POST_BACKLOG: "1"
+          MAX_POST: "5"
+        run: python fetch_jobs.py
 
-      - name: Commit jobs.json
+      - name: Save jobs.json
         run: |
-          git config user.name "job-bot"
-          git config user.email "job-bot@users.noreply.github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
           git add jobs.json
-          git diff --staged --quiet || git commit -m "Update jobs.json"
+          git commit -m "update jobs" || echo "no changes"
           git push
