@@ -1,16 +1,3 @@
-"""
-Telegram public channel -> jobs.json (sirf apply links)
-Source: https://t.me/s/<channel>
-
-Env vars (optional):
-  SOURCE_CHANNEL  default: Freshers_job_updates_by_akhila
-  PAGES           kitne preview pages padhne hain (default: 3)
-  MAX_KEEP        jobs.json mein max links (default: 500)
-  BOT_TOKEN       Telegram bot token (auto-post ke liye)
-  TARGET_CHAT     aapka channel, jaise @mychannel
-  MAX_POST        ek run mein max naye links (default: 5)
-  POST_BACKLOG    "1" ho to pehle run mein purane links bhi post honge
-"""
 import json
 import os
 import re
@@ -33,13 +20,11 @@ DATA_FILE = Path(__file__).parent / "jobs.json"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; JobFetchBot/1.0)"}
 
 URL_RE = re.compile(r"https?://[^\s<>\"]+")
-# in links ko skip karo (promo / shortener / social)
 SKIP_LINK_RE = re.compile(
     r"t\.me|telegram\.me|bit\.ly|wa\.me|whatsapp\.com|instagram\.com|"
     r"youtube\.com|youtu\.be|facebook\.com|linkedin\.com/company|chat\.whatsapp",
     re.I,
 )
-# scam wale posts ko pura hata do
 SCAM_RE = re.compile(
     r"registration fee|security deposit|pay\s*(rs|₹)|processing fee|"
     r"training fee|refundable|send money|paid kit",
@@ -74,7 +59,7 @@ def parse_posts(html):
         links += URL_RE.findall(text)
         links = [u.rstrip(".,)") for u in links
                  if u.startswith("http") and not SKIP_LINK_RE.search(u)]
-        links = list(dict.fromkeys(links))  # duplicate hatao, order rakho
+        links = list(dict.fromkeys(links))
         if not links:
             continue
 
